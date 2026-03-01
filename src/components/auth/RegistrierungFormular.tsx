@@ -34,7 +34,7 @@ export default function RegistrierungFormular() {
       const antwort = await fetch("/api/auth/registrieren", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, passwort }),
+        body: JSON.stringify({ email, passwort, passwortBestaetigung }),
       });
 
       const daten = await antwort.json();
