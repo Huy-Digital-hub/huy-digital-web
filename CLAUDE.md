@@ -1,5 +1,15 @@
 # CLAUDE.md — Huy Digital Trading Intelligence Platform
 
+## KRITISCHE DEPLOYMENT-REGELN (NIEMALS BRECHEN)
+
+1. **NIEMALS `npm run build` auf dem Infomaniak Server ausführen** — Der Server hat zu wenig RAM. Build passiert AUSSCHLIESSLICH lokal.
+2. **`deploy.sh` auf dem Server NIEMALS überschreiben oder verändern** — Diese Datei darf KEIN `npm run build` enthalten.
+3. **Deployment-Workflow:**
+   - Lokal: `npm run build`
+   - Lokal: `git add -f .next/standalone/ .next/static/`
+   - Lokal: `git commit` und `git push`
+   - Server: `cd ~/sites/huy-digital.com && ./deploy.sh`
+
 ## Projekt-Übersicht
 
 **Plattform:** Huy Digital Trading Intelligence (huy-digital.com)
