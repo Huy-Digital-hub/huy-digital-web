@@ -4,7 +4,7 @@ import { RoadmapEintrag } from "./RoadmapEintrag";
 
 const ROADMAP = [
   {
-    quartal: "Q1 2025",
+    quartal: "Q1 2026",
     titel: "Foundation",
     beschreibung: "Plattform-Launch und Kern-Features",
     status: "erledigt" as const,
@@ -15,7 +15,7 @@ const ROADMAP = [
     ],
   },
   {
-    quartal: "Q2 2025",
+    quartal: "Q2 2026",
     titel: "Analyse-Suite",
     beschreibung: "Erweiterte Analyse-Tools",
     status: "aktuell" as const,
@@ -26,7 +26,7 @@ const ROADMAP = [
     ],
   },
   {
-    quartal: "Q3 2025",
+    quartal: "Q3 2026",
     titel: "Smart Money",
     beschreibung: "Institutionelle Intelligenz",
     status: "geplant" as const,
@@ -37,7 +37,7 @@ const ROADMAP = [
     ],
   },
   {
-    quartal: "Q4 2025",
+    quartal: "Q4 2026",
     titel: "API & Automation",
     beschreibung: "Programmatischer Zugang",
     status: "geplant" as const,
