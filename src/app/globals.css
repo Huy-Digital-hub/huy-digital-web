@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #0a0a0f;
+    --foreground: #e4e4e7;
+  }
+
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-huy-bg font-sans text-huy-text antialiased;
+  }
+
+  /* Scrollbar im Terminal-Stil */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-huy-bg;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-huy-muted/30;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-huy-muted/50;
+  }
+}
+
+@layer components {
+  /* Glasmorphismus-Karte */
+  .karte {
+    @apply rounded-lg border border-white/10 bg-huy-card/80 p-6 backdrop-blur;
+  }
+
+  /* Gold-Akzent-Button */
+  .btn-gold {
+    @apply rounded-lg bg-huy-gold px-4 py-2 font-medium text-huy-bg transition-all duration-200 hover:bg-huy-gold-light;
+  }
+
+  /* Sekundärer Button */
+  .btn-sekundaer {
+    @apply rounded-lg border border-white/10 bg-huy-card px-4 py-2 font-medium text-huy-text transition-all duration-200 hover:border-huy-gold/50 hover:text-huy-gold;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
