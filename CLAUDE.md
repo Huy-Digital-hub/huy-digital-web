@@ -10,6 +10,18 @@
    - Lokal: `git commit` und `git push`
    - Server: `cd ~/sites/huy-digital.com && ./deploy.sh`
 
+## Sprache
+
+- Immer auf Deutsch kommunizieren
+- Alle Fragen, Erklärungen und Zusammenfassungen auf Deutsch
+
+## Design
+
+- Dark Theme mit Gold-Akzenten (#D4AF37)
+- Fonts: JetBrains Mono + Inter
+- Deutsche UI-Texte
+- Bestehende Seiten NICHT komplett neu erstellen, sondern nur gezielt ändern
+
 ## Projekt-Übersicht
 
 **Plattform:** Huy Digital Trading Intelligence (huy-digital.com)
@@ -25,11 +37,11 @@
 | Sprache          | TypeScript (strict mode)             |
 | Styling          | Tailwind CSS                         |
 | ORM              | Prisma                               |
-| Datenbank        | PostgreSQL                           |
-| Auth             | NextAuth.js mit 2FA                  |
+| Datenbank        | MySQL (MariaDB auf Infomaniak)       |
+| Auth             | NextAuth.js (JWT, Credentials)       |
 | Zahlung          | Stripe (serverseitig)                |
 | Validierung      | Zod                                  |
-| Hosting          | Infomaniak (später evtl. Vercel)     |
+| Hosting          | Infomaniak (Node.js 24, Port 3000)   |
 
 ## Projektstruktur
 
