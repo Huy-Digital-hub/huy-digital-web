@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
@@ -12,10 +12,9 @@ const NAV_LINKS = [
 ];
 
 export function MarketingHeader() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [scrolled, setScrolled] = useState(false);
-  const touchedRef = useRef(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -44,31 +43,17 @@ export function MarketingHeader() {
     return () => observer.disconnect();
   }, []);
 
-  const toggleMenu = useCallback(() => {
-    setMobileMenuOpen((prev) => !prev);
-  }, []);
-
   function scrollToSection(href: string) {
     const id = href.replace("#", "");
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-    setMobileMenuOpen(false);
-  }
-
-  function handleNavClick(e: React.MouseEvent<HTMLAnchorElement>, href: string) {
-    e.preventDefault();
-    scrollToSection(href);
-  }
-
-  function handleNavTouch(e: React.TouchEvent<HTMLAnchorElement>, href: string) {
-    e.preventDefault();
-    scrollToSection(href);
+    setMenuOpen(false);
   }
 
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 border-b border-white/10 transition-all duration-300",
-        scrolled ? "bg-huy-bg/90 backdrop-blur-lg" : "bg-transparent"
+        "sticky top-0 z-40 border-b border-white/10 transition-colors duration-300",
+        scrolled ? "bg-huy-bg" : "bg-huy-bg/80"
       )}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -84,7 +69,10 @@ export function MarketingHeader() {
             <a
               key={link.href}
               href={link.href}
-              onClick={(e) => handleNavClick(e, link.href)}
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection(link.href);
+              }}
               className={cn(
                 "text-sm font-medium transition-colors duration-200",
                 activeSection === link.href.replace("#", "")
@@ -110,61 +98,55 @@ export function MarketingHeader() {
         {/* Mobile Hamburger */}
         <button
           type="button"
-          onClick={() => {
-            if (touchedRef.current) {
-              touchedRef.current = false;
-              return;
-            }
-            toggleMenu();
-          }}
-          onTouchEnd={(e) => {
-            e.preventDefault();
-            touchedRef.current = true;
-            toggleMenu();
-          }}
-          className="relative z-50 flex h-12 w-12 items-center justify-center rounded-lg border border-white/10 md:hidden"
-          style={{ touchAction: "manipulation", WebkitTapHighlightColor: "transparent" }}
-          aria-label={mobileMenuOpen ? "Menü schliessen" : "Menü öffnen"}
-          aria-expanded={mobileMenuOpen}
+          aria-label="Menü"
+          aria-expanded={menuOpen}
+          className="relative z-50 flex h-12 w-12 cursor-pointer items-center justify-center rounded-lg border border-white/10 bg-huy-card md:hidden"
+          style={{ WebkitTapHighlightColor: "transparent" }}
+          onClick={() => setMenuOpen(!menuOpen)}
         >
-          <div className="pointer-events-none flex w-5 flex-col gap-1">
-            <span
-              className={cn(
-                "block h-0.5 w-full bg-huy-text transition-all duration-200",
-                mobileMenuOpen && "translate-y-1.5 rotate-45"
-              )}
-            />
-            <span
-              className={cn(
-                "block h-0.5 w-full bg-huy-text transition-all duration-200",
-                mobileMenuOpen && "opacity-0"
-              )}
-            />
-            <span
-              className={cn(
-                "block h-0.5 w-full bg-huy-text transition-all duration-200",
-                mobileMenuOpen && "-translate-y-1.5 -rotate-45"
-              )}
-            />
-          </div>
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            className="text-huy-text"
+          >
+            {menuOpen ? (
+              <>
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </>
+            ) : (
+              <>
+                <line x1="4" y1="6" x2="20" y2="6" />
+                <line x1="4" y1="12" x2="20" y2="12" />
+                <line x1="4" y1="18" x2="20" y2="18" />
+              </>
+            )}
+          </svg>
         </button>
       </div>
 
       {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className="absolute left-0 right-0 top-full z-50 border-t border-white/10 bg-huy-bg backdrop-blur-lg md:hidden">
-          <nav className="flex flex-col gap-1 px-4 py-4">
+      {menuOpen && (
+        <div className="absolute left-0 right-0 top-16 z-50 border-b border-white/10 bg-huy-bg shadow-2xl md:hidden">
+          <nav className="flex flex-col px-4 py-4">
             {NAV_LINKS.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                onTouchEnd={(e) => handleNavTouch(e, link.href)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection(link.href);
+                }}
                 className={cn(
-                  "rounded-lg px-4 py-3 text-base font-medium transition-colors",
+                  "block rounded-lg px-4 py-3 text-base font-medium",
                   activeSection === link.href.replace("#", "")
                     ? "bg-huy-gold/10 text-huy-gold"
-                    : "text-huy-muted hover:bg-white/5 hover:text-huy-text"
+                    : "text-huy-muted active:bg-white/10"
                 )}
               >
                 {link.label}
@@ -173,15 +155,15 @@ export function MarketingHeader() {
             <div className="mt-3 flex flex-col gap-2 border-t border-white/10 pt-3">
               <Link
                 href="/login"
-                className="btn-sekundaer text-center text-sm"
-                onClick={() => setMobileMenuOpen(false)}
+                className="btn-sekundaer block text-center text-sm"
+                onClick={() => setMenuOpen(false)}
               >
                 Anmelden
               </Link>
               <Link
                 href="/registrierung"
-                className="btn-gold text-center text-sm"
-                onClick={() => setMobileMenuOpen(false)}
+                className="btn-gold block text-center text-sm"
+                onClick={() => setMenuOpen(false)}
               >
                 Kostenlos starten
               </Link>
