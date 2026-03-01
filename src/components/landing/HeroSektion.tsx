@@ -25,13 +25,14 @@ export function HeroSektion() {
         <h1 className="text-4xl font-bold tracking-tight text-huy-text sm:text-5xl md:text-6xl lg:text-7xl">
           Institutionelle Marktdaten
           <br />
-          <span className="text-huy-gold">für Retail-Trader</span>
+          <span className="text-huy-gold">für alle</span>
         </h1>
 
         <p className="mx-auto mt-6 max-w-2xl text-lg text-huy-muted md:mt-8 md:text-xl">
           Die gleichen Daten, die Hedgefonds und institutionelle Trader nutzen —
-          aufbereitet für dich. Regime-Erkennung, Sentiment, COT und Smart Money
-          auf einer Plattform.
+          aufbereitet für Trader, Investoren und alle, die fundierte
+          Entscheidungen treffen wollen. Regime-Erkennung, Sentiment, COT und
+          Smart Money auf einer Plattform.
         </p>
 
         <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row md:mt-10">
