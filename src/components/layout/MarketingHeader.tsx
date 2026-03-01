@@ -98,11 +98,11 @@ export function MarketingHeader() {
         {/* Mobile Hamburger */}
         <button
           type="button"
-          aria-label="Menü"
+          aria-label={menuOpen ? "Menü schliessen" : "Menü öffnen"}
           aria-expanded={menuOpen}
           className="relative z-50 flex h-12 w-12 cursor-pointer items-center justify-center rounded-lg border border-white/10 bg-huy-card md:hidden"
-          style={{ WebkitTapHighlightColor: "transparent" }}
-          onClick={() => setMenuOpen(!menuOpen)}
+          style={{ WebkitTapHighlightColor: "transparent", touchAction: "manipulation" }}
+          onClick={() => setMenuOpen((prev) => !prev)}
         >
           <svg
             width="24"
@@ -112,7 +112,7 @@ export function MarketingHeader() {
             stroke="currentColor"
             strokeWidth="2"
             strokeLinecap="round"
-            className="text-huy-text"
+            className="pointer-events-none text-huy-text"
           >
             {menuOpen ? (
               <>
