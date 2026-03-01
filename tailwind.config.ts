@@ -28,6 +28,20 @@ const config: Config = {
         sans: ["Inter", "system-ui", "sans-serif"],
         mono: ["JetBrains Mono", "Fira Code", "monospace"],
       },
+      animation: {
+        "cursor-blink": "cursor-blink 1s step-end infinite",
+        "slide-in": "slide-in 0.3s ease-out forwards",
+      },
+      keyframes: {
+        "cursor-blink": {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0" },
+        },
+        "slide-in": {
+          from: { opacity: "0", transform: "translateX(-10px)" },
+          to: { opacity: "1", transform: "translateX(0)" },
+        },
+      },
       backdropBlur: {
         xs: "2px",
       },
