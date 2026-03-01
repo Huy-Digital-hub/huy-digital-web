@@ -35,7 +35,7 @@ export default function LoginFormular() {
       if (ergebnis?.error) {
         setFehler("Ungültige E-Mail oder Passwort.");
       } else {
-        router.push("/uebersicht");
+        router.push("/dashboard/uebersicht");
         router.refresh();
       }
     } catch {

@@ -55,7 +55,7 @@ export default function RegistrierungFormular() {
         // Registrierung war erfolgreich, Login fehlgeschlagen — zur Login-Seite
         router.push("/login");
       } else {
-        router.push("/uebersicht");
+        router.push("/dashboard/uebersicht");
         router.refresh();
       }
     } catch {

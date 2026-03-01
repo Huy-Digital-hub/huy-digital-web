@@ -20,7 +20,7 @@ export default function BenutzerNav() {
       </div>
       <div className="space-y-1">
         <Link
-          href="/profil"
+          href="/dashboard/profil"
           className="block rounded-md px-3 py-2 text-sm text-huy-muted transition-colors hover:bg-white/5 hover:text-huy-text"
         >
           Profil

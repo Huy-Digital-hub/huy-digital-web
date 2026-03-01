@@ -9,16 +9,6 @@ const REDIRECT_HOSTS = [
   "www.huy-digital.ch",
 ];
 
-/** Dashboard-Pfade die eine Authentifizierung erfordern */
-const GESCHUETZTE_PFADE = [
-  "/uebersicht",
-  "/marktdaten",
-  "/signale",
-  "/portfolio",
-  "/einstellungen",
-  "/profil",
-];
-
 export function middleware(request: NextRequest) {
   const host = request.headers.get("host")?.split(":")[0] ?? "";
 
@@ -31,13 +21,10 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(url, 301);
   }
 
-  // 2. Auth-Schutz für Dashboard-Routen
+  // 2. Auth-Schutz für alle /dashboard/* Routen
   const pfad = request.nextUrl.pathname;
-  const istGeschuetzt = GESCHUETZTE_PFADE.some(
-    (p) => pfad === p || pfad.startsWith(`${p}/`)
-  );
 
-  if (istGeschuetzt) {
+  if (pfad.startsWith("/dashboard")) {
     const sessionToken =
       request.cookies.get("next-auth.session-token")?.value ??
       request.cookies.get("__Secure-next-auth.session-token")?.value;

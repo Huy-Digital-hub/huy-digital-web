@@ -96,26 +96,27 @@ export function MarketingHeader() {
         {/* Mobile Hamburger */}
         <button
           type="button"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 md:hidden"
-          aria-label="Menü öffnen"
+          onClick={() => setMobileMenuOpen((prev) => !prev)}
+          className="relative z-50 flex h-12 w-12 touch-manipulation items-center justify-center rounded-lg border border-white/10 md:hidden"
+          aria-label={mobileMenuOpen ? "Menü schliessen" : "Menü öffnen"}
+          aria-expanded={mobileMenuOpen}
         >
-          <div className="flex w-5 flex-col gap-1">
+          <div className="pointer-events-none flex w-5 flex-col gap-1">
             <span
               className={cn(
-                "h-0.5 w-full bg-huy-text transition-all duration-200",
+                "block h-0.5 w-full bg-huy-text transition-all duration-200",
                 mobileMenuOpen && "translate-y-1.5 rotate-45"
               )}
             />
             <span
               className={cn(
-                "h-0.5 w-full bg-huy-text transition-all duration-200",
+                "block h-0.5 w-full bg-huy-text transition-all duration-200",
                 mobileMenuOpen && "opacity-0"
               )}
             />
             <span
               className={cn(
-                "h-0.5 w-full bg-huy-text transition-all duration-200",
+                "block h-0.5 w-full bg-huy-text transition-all duration-200",
                 mobileMenuOpen && "-translate-y-1.5 -rotate-45"
               )}
             />
