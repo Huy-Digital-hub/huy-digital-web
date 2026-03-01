@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
@@ -15,6 +15,7 @@ export function MarketingHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [scrolled, setScrolled] = useState(false);
+  const touchedRef = useRef(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -43,11 +44,24 @@ export function MarketingHeader() {
     return () => observer.disconnect();
   }, []);
 
-  function handleNavClick(e: React.MouseEvent<HTMLAnchorElement>, href: string) {
-    e.preventDefault();
+  const toggleMenu = useCallback(() => {
+    setMobileMenuOpen((prev) => !prev);
+  }, []);
+
+  function scrollToSection(href: string) {
     const id = href.replace("#", "");
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     setMobileMenuOpen(false);
+  }
+
+  function handleNavClick(e: React.MouseEvent<HTMLAnchorElement>, href: string) {
+    e.preventDefault();
+    scrollToSection(href);
+  }
+
+  function handleNavTouch(e: React.TouchEvent<HTMLAnchorElement>, href: string) {
+    e.preventDefault();
+    scrollToSection(href);
   }
 
   return (
@@ -96,8 +110,20 @@ export function MarketingHeader() {
         {/* Mobile Hamburger */}
         <button
           type="button"
-          onClick={() => setMobileMenuOpen((prev) => !prev)}
-          className="relative z-50 flex h-12 w-12 touch-manipulation items-center justify-center rounded-lg border border-white/10 md:hidden"
+          onClick={() => {
+            if (touchedRef.current) {
+              touchedRef.current = false;
+              return;
+            }
+            toggleMenu();
+          }}
+          onTouchEnd={(e) => {
+            e.preventDefault();
+            touchedRef.current = true;
+            toggleMenu();
+          }}
+          className="relative z-50 flex h-12 w-12 items-center justify-center rounded-lg border border-white/10 md:hidden"
+          style={{ touchAction: "manipulation", WebkitTapHighlightColor: "transparent" }}
           aria-label={mobileMenuOpen ? "Menü schliessen" : "Menü öffnen"}
           aria-expanded={mobileMenuOpen}
         >
@@ -126,15 +152,16 @@ export function MarketingHeader() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="border-t border-white/10 bg-huy-bg/95 backdrop-blur-lg md:hidden">
+        <div className="absolute left-0 right-0 top-full z-50 border-t border-white/10 bg-huy-bg backdrop-blur-lg md:hidden">
           <nav className="flex flex-col gap-1 px-4 py-4">
             {NAV_LINKS.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
+                onTouchEnd={(e) => handleNavTouch(e, link.href)}
                 className={cn(
-                  "rounded-lg px-4 py-2.5 text-sm font-medium transition-colors",
+                  "rounded-lg px-4 py-3 text-base font-medium transition-colors",
                   activeSection === link.href.replace("#", "")
                     ? "bg-huy-gold/10 text-huy-gold"
                     : "text-huy-muted hover:bg-white/5 hover:text-huy-text"
@@ -144,10 +171,18 @@ export function MarketingHeader() {
               </a>
             ))}
             <div className="mt-3 flex flex-col gap-2 border-t border-white/10 pt-3">
-              <Link href="/login" className="btn-sekundaer text-center text-sm">
+              <Link
+                href="/login"
+                className="btn-sekundaer text-center text-sm"
+                onClick={() => setMobileMenuOpen(false)}
+              >
                 Anmelden
               </Link>
-              <Link href="/registrierung" className="btn-gold text-center text-sm">
+              <Link
+                href="/registrierung"
+                className="btn-gold text-center text-sm"
+                onClick={() => setMobileMenuOpen(false)}
+              >
                 Kostenlos starten
               </Link>
             </div>
