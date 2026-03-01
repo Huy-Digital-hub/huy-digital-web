@@ -16,7 +16,17 @@ export default function DashboardLayout({
       </aside>
 
       {/* Hauptinhalt */}
-      <main className="flex-1 p-6">{children}</main>
+      <div className="flex flex-1 flex-col">
+        <main className="flex-1 p-6">{children}</main>
+        <footer className="border-t border-white/10 px-6 py-4">
+          <p className="text-xs leading-relaxed text-huy-muted/70">
+            Huy Digital ist eine reine Informationsplattform. Keine
+            Anlageberatung. Alle Inhalte dienen ausschliesslich zu
+            Informationszwecken und stellen keine Empfehlung zum Kauf oder
+            Verkauf von Finanzinstrumenten dar.
+          </p>
+        </footer>
+      </div>
     </div>
   );
 }

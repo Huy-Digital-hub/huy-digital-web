@@ -45,6 +45,13 @@ const FEATURES = [
     icon: "\uD83D\uDD17",
     status: "bald" as const,
   },
+  {
+    titel: "Live-Transkription",
+    beschreibung:
+      "Fed, EZB & Pressekonferenzen live auf Deutsch übersetzt mit AI-Zusammenfassung.",
+    icon: "\uD83C\uDFA4",
+    status: "bald" as const,
+  },
 ];
 
 export function FeaturesSektion() {
@@ -54,7 +61,7 @@ export function FeaturesSektion() {
         <SektionUeberschrift
           tagline="Features"
           titel="Alles, was du für professionelles Trading brauchst"
-          beschreibung="Sechs leistungsstarke Module — von Echtzeit-News bis zur Korrelationsanalyse."
+          beschreibung="Sieben leistungsstarke Module — von Echtzeit-News bis zur Live-Transkription."
         />
 
         <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

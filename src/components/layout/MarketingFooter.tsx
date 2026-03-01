@@ -98,8 +98,18 @@ export function MarketingFooter() {
           </div>
         </div>
 
+        {/* Disclaimer */}
+        <div className="mt-12 border-t border-white/10 pt-8">
+          <p className="text-xs leading-relaxed text-huy-muted/70">
+            Huy Digital ist eine reine Informationsplattform. Keine
+            Anlageberatung. Alle Inhalte dienen ausschliesslich zu
+            Informationszwecken und stellen keine Empfehlung zum Kauf oder
+            Verkauf von Finanzinstrumenten dar.
+          </p>
+        </div>
+
         {/* Untere Leiste */}
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-xs text-huy-muted sm:flex-row">
+        <div className="mt-6 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 text-xs text-huy-muted sm:flex-row">
           <p>&copy; {new Date().getFullYear()} Huy Digital. Alle Rechte vorbehalten.</p>
           <p>Made in Switzerland</p>
         </div>
