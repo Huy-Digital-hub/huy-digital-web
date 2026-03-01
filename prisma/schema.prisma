@@ -1,13 +1,21 @@
 // Prisma Schema für Huy Digital Trading Intelligence Platform
-// Dokumentation: https://pris.ly/d/prisma-schema
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
-// Datenmodelle werden hier definiert
+model Benutzer {
+  id              String    @id @default(cuid())
+  email           String    @unique
+  emailVerifiziert DateTime?
+  passwortHash    String
+  name            String?
+  rolle           String    @default("benutzer")
+  erstelltAm      DateTime  @default(now())
+  aktualisiertAm  DateTime  @updatedAt
+}

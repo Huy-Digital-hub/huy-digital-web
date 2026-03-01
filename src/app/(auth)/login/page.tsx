@@ -1,8 +1,17 @@
+import AuthKarte from "@/components/auth/AuthKarte";
+import LoginFormular from "@/components/auth/LoginFormular";
+
+export const metadata = {
+  title: "Anmelden",
+};
+
 export default function LoginSeite() {
   return (
-    <div className="rounded-lg border border-white/10 bg-huy-card p-8">
-      <h1 className="text-2xl font-bold text-huy-text">Anmelden</h1>
-      <p className="mt-2 text-huy-muted">Login-Seite wird implementiert.</p>
-    </div>
+    <AuthKarte
+      titel="Anmelden"
+      beschreibung="Melde dich mit deinem Konto an."
+    >
+      <LoginFormular />
+    </AuthKarte>
   );
 }
