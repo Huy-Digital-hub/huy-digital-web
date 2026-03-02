@@ -10,6 +10,23 @@
    - Lokal: `git commit` und `git push`
    - Server: `cd ~/sites/huy-digital.com && ./deploy.sh`
 
+## SCHUTZREGELN FÜR CODE-ÄNDERUNGEN
+
+- Lies ZUERST alle betroffenen Dateien bevor du etwas änderst
+- Zeige mir einen Plan BEVOR du Dateien änderst: welche Dateien, welche Zeilen, was genau
+- Warte auf meine Bestätigung bevor du Änderungen durchführst
+- Ändere NUR die Dateien und Zeilen die explizit mit der Aufgabe zu tun haben
+- Wenn eine Datei funktioniert und nicht direkt betroffen ist: NICHT ANFASSEN
+- Nach jeder Änderung: erkläre was du geändert hast und warum
+- Bestehende Seiten NIEMALS komplett neu erstellen — nur gezielt ändern
+
+## PROJEKT-BESCHREIBUNG
+
+- Huy Digital ist eine Markt-Intelligence Plattform
+- Zielgruppe: Trader, Investoren UND Börsen-Interessierte (nicht nur Trader!)
+- Alle UI-Texte auf Deutsch
+- Design: Dark Theme, Gold-Akzente (#D4AF37), Fonts: JetBrains Mono + Inter
+
 ## Sprache
 
 - Immer auf Deutsch kommunizieren
