@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import AuthKarte from "@/components/auth/AuthKarte";
 import LoginFormular from "@/components/auth/LoginFormular";
 
@@ -11,7 +12,9 @@ export default function LoginSeite() {
       titel="Anmelden"
       beschreibung="Melde dich mit deinem Konto an."
     >
-      <LoginFormular />
+      <Suspense fallback={<div className="text-center text-sm text-huy-muted">Laden...</div>}>
+        <LoginFormular />
+      </Suspense>
     </AuthKarte>
   );
 }

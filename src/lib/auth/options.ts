@@ -33,6 +33,10 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Ungültige Anmeldedaten");
         }
 
+        if (!benutzer.emailVerifiziert) {
+          throw new Error("EMAIL_NICHT_VERIFIZIERT");
+        }
+
         return {
           id: benutzer.id,
           email: benutzer.email,

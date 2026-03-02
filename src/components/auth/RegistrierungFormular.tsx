@@ -1,17 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { registrierungSchema } from "@/lib/validators";
 
 export default function RegistrierungFormular() {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [passwort, setPasswort] = useState("");
   const [passwortBestaetigung, setPasswortBestaetigung] = useState("");
   const [fehler, setFehler] = useState("");
+  const [erfolg, setErfolg] = useState(false);
   const [laedt, setLaedt] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
@@ -44,25 +42,30 @@ export default function RegistrierungFormular() {
         return;
       }
 
-      // Automatisch einloggen nach Registrierung
-      const loginErgebnis = await signIn("credentials", {
-        email,
-        passwort,
-        redirect: false,
-      });
-
-      if (loginErgebnis?.error) {
-        // Registrierung war erfolgreich, Login fehlgeschlagen — zur Login-Seite
-        router.push("/login");
-      } else {
-        router.push("/dashboard/uebersicht");
-        router.refresh();
-      }
+      setErfolg(true);
     } catch {
       setFehler("Ein Fehler ist aufgetreten. Bitte versuche es erneut.");
     } finally {
       setLaedt(false);
     }
+  }
+
+  if (erfolg) {
+    return (
+      <div className="space-y-4">
+        <div className="rounded-md border border-green-500/30 bg-green-500/10 px-4 py-3 text-sm text-green-400">
+          Registrierung erfolgreich! Wir haben dir eine E-Mail gesendet.
+          Bitte prüfe dein Postfach und klicke auf den Bestätigungslink,
+          um dein Konto zu aktivieren.
+        </div>
+        <Link
+          href="/login"
+          className="block text-center text-sm text-huy-muted transition-colors hover:text-huy-gold"
+        >
+          Zum Login
+        </Link>
+      </div>
+    );
   }
 
   return (

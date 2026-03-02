@@ -10,14 +10,16 @@ datasource db {
 }
 
 model Benutzer {
-  id              String    @id @default(cuid())
-  email           String    @unique
-  emailVerifiziert DateTime?
-  passwortHash    String
-  name            String?
-  rolle           String    @default("benutzer")
-  erstelltAm      DateTime  @default(now())
-  aktualisiertAm  DateTime  @updatedAt
+  id                           String    @id @default(cuid())
+  email                        String    @unique
+  emailVerifiziert             Boolean   @default(false)
+  passwortHash                 String
+  name                         String?
+  rolle                        String    @default("benutzer")
+  verifizierungsToken          String?   @unique
+  verifizierungsTokenAblauftAm DateTime?
+  erstelltAm                   DateTime  @default(now())
+  aktualisiertAm               DateTime  @updatedAt
 }
 
 model PasswortResetToken {

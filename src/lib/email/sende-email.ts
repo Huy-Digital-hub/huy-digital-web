@@ -14,15 +14,35 @@ interface EmailOptionen {
   an: string;
   betreff: string;
   html: string;
+  von?: string;
 }
 
-export async function sendeEmail({ an, betreff, html }: EmailOptionen) {
+export async function sendeEmail({ an, betreff, html, von }: EmailOptionen) {
   await transporter.sendMail({
-    from: `"Huy Digital" <${process.env.SMTP_USER}>`,
+    from: von ?? `"Huy Digital" <${process.env.SMTP_USER}>`,
     to: an,
     subject: betreff,
     html,
   });
+}
+
+export function verifizierungsEmail(verifizierungsUrl: string): string {
+  return `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #0a0a0f; color: #e4e4e7; padding: 40px; border-radius: 8px;">
+      <h1 style="color: #D4AF37; font-size: 24px; margin-bottom: 24px;">E-Mail bestätigen</h1>
+      <p style="margin-bottom: 16px; line-height: 1.6;">
+        Willkommen bei Huy Digital! Bitte bestätige deine E-Mail-Adresse, um dein Konto zu aktivieren.
+      </p>
+      <a href="${verifizierungsUrl}" style="display: inline-block; background-color: #D4AF37; color: #0a0a0f; padding: 12px 32px; border-radius: 6px; text-decoration: none; font-weight: bold; margin: 16px 0;">
+        E-Mail bestätigen
+      </a>
+      <p style="margin-top: 24px; font-size: 14px; color: #a1a1aa; line-height: 1.6;">
+        Dieser Link ist <strong>24 Stunden</strong> gültig. Falls du kein Konto erstellt hast, kannst du diese E-Mail ignorieren.
+      </p>
+      <hr style="border: none; border-top: 1px solid #333; margin: 24px 0;" />
+      <p style="font-size: 12px; color: #666;">Huy Digital — huy-digital.com</p>
+    </div>
+  `;
 }
 
 export function passwortResetEmail(resetUrl: string): string {
