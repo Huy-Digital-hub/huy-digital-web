@@ -1,6 +1,12 @@
 import { NextResponse } from "next/server";
+import { randomBytes } from "crypto";
 import { passwortVergessenSchema } from "@/lib/validators";
 import { istRateLimitiert } from "@/lib/auth/rate-limit";
+import { prisma } from "@/lib/db";
+import { sendeEmail, passwortResetEmail } from "@/lib/email/sende-email";
+
+const ANTWORT_NACHRICHT =
+  "Falls ein Konto mit dieser E-Mail existiert, erhältst du eine E-Mail mit Anweisungen zum Zurücksetzen deines Passworts.";
 
 export async function POST(request: Request) {
   try {
@@ -24,14 +30,44 @@ export async function POST(request: Request) {
       );
     }
 
-    // Hinweis: Hier würde der echte E-Mail-Versand implementiert werden.
-    // Aus Sicherheitsgründen geben wir immer die gleiche Antwort zurück,
-    // unabhängig davon ob die E-Mail existiert oder nicht.
+    const { email } = ergebnis.data;
 
-    return NextResponse.json({
-      nachricht:
-        "Falls ein Konto mit dieser E-Mail existiert, erhältst du eine E-Mail mit Anweisungen zum Zurücksetzen deines Passworts.",
+    // Benutzer suchen — Antwort ist immer gleich (Sicherheit)
+    const benutzer = await prisma.benutzer.findUnique({
+      where: { email: email.toLowerCase() },
     });
+
+    if (benutzer) {
+      // Alte unbenutzte Tokens für diese E-Mail invalidieren
+      await prisma.passwortResetToken.deleteMany({
+        where: { email: benutzer.email, benutztAm: null },
+      });
+
+      // Neuen Token generieren (1 Stunde gültig)
+      const token = randomBytes(32).toString("hex");
+      await prisma.passwortResetToken.create({
+        data: {
+          token,
+          email: benutzer.email,
+          ablauftAm: new Date(Date.now() + 60 * 60 * 1000),
+        },
+      });
+
+      // Reset-E-Mail senden
+      const resetUrl = `${process.env.NEXTAUTH_URL}/passwort-zuruecksetzen?token=${token}`;
+      try {
+        await sendeEmail({
+          an: benutzer.email,
+          betreff: "Passwort zurücksetzen — Huy Digital",
+          html: passwortResetEmail(resetUrl),
+        });
+      } catch (emailFehler) {
+        console.error("E-Mail-Versand fehlgeschlagen:", emailFehler);
+      }
+    }
+
+    // Aus Sicherheitsgründen immer die gleiche Antwort
+    return NextResponse.json({ nachricht: ANTWORT_NACHRICHT });
   } catch {
     return NextResponse.json(
       { fehler: "Ein Fehler ist aufgetreten. Bitte versuche es erneut." },

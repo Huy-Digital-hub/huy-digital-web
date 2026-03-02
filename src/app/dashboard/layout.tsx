@@ -1,6 +1,7 @@
 import Link from "next/link";
 import SessionWrapper from "@/components/dashboard/SessionWrapper";
 import BenutzerNav from "@/components/dashboard/BenutzerNav";
+import DashboardMobileNav from "@/components/dashboard/DashboardMobileNav";
 
 const navLinks = [
   { href: "/dashboard/uebersicht", label: "Übersicht" },
@@ -41,6 +42,7 @@ export default function DashboardLayout({
 
         {/* Hauptinhalt */}
         <div className="flex flex-1 flex-col">
+          <DashboardMobileNav />
           <main className="flex-1 p-6">{children}</main>
           <footer className="border-t border-white/10 px-6 py-4">
             <p className="text-xs leading-relaxed text-huy-muted/70">
